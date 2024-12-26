@@ -1,0 +1,14 @@
+<!-- Шаблон для отображения содержимого корзины -->
+<h1>Корзина</h1>
+{% if cart.items.count > 0 %}
+    <ul>
+        {% for item in cart.items.all %}
+            <li>
+                {{ item.product.name }} - {{ item.quantity }} шт. - {{ item.product.price }} р.
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Итого: {{ cart.items.aggregate(Sum('quantity')) }} товаров</p>
+{% else %}
+    <p>Корзина пуста.</p>
+{% endif %}
