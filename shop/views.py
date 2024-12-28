@@ -1,10 +1,13 @@
 from http import HTTPStatus
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import CreateView, DetailView, ListView
+from django.views import View
+from django.views.generic import CreateView, DeleteView, DetailView, ListView
 
-from .models import Cart, CartItem, ParentCategory, Product
+from .models import Cart, CartItem, Category, ParentCategory, Product
 
 
 class CategoryListView(ListView):
@@ -18,6 +21,16 @@ class CategoryListView(ListView):
     def get_queryset(self):
         return ParentCategory.objects.prefetch_related('subcategories').all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            cart = get_object_or_404(Cart, user=self.request.user)
+            context['total_quantity'] = cart.items.aggregate(Sum('quantity'))[
+                'quantity__sum'] or 0
+        else:
+            context['total_quantity'] = 0
+        return context
+
 
 class ProductListView(ListView):
     """
@@ -30,7 +43,15 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         category_id = self.kwargs.get('category_id')
-        return Product.objects.filter(category__id=category_id)
+        return Product.objects.filter(
+            category__id=category_id).select_related('category')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('category_id')
+        category = get_object_or_404(Category, id=category_id)
+        context['category'] = category
+        return context
 
 
 class ProductDetailView(DetailView):
@@ -40,6 +61,9 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'shop/product_detail.html'
 
+    def get_object(self, queryset=None):
+        return self.get_queryset().get(id=self.kwargs['product_id'])
+
 
 class CartCreateView(LoginRequiredMixin, CreateView):
     """
@@ -47,7 +71,6 @@ class CartCreateView(LoginRequiredMixin, CreateView):
     Если продукт уже есть в корзине, увеличивает его количество.
     """
     model = CartItem
-    template_name = 'shop/cart.html'
 
     def post(self, request, *args, **kwargs):
         product_id = self.kwargs.get('product_id')
@@ -60,7 +83,11 @@ class CartCreateView(LoginRequiredMixin, CreateView):
             cart_item.quantity += 1
             cart_item.save()
 
-        return redirect('cart')
+        referer = request.META.get('HTTP_REFERER')
+        if referer:
+            return redirect(referer)
+        else:
+            return redirect('shop:view_cart')
 
 
 class CartListView(LoginRequiredMixin, ListView):
@@ -74,6 +101,54 @@ class CartListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         cart = get_object_or_404(Cart, user=self.request.user)
         return cart.items.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = get_object_or_404(Cart, user=self.request.user)
+        context['total_quantity'] = cart.items.aggregate(Sum('quantity'))[
+            'quantity__sum'] or 0
+        context['total_price'] = cart.items.aggregate(Sum('product__price'))[
+            'product__price__sum'] or 0
+        return context
+
+
+class CartItemDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    Удаляет товар из корзины.
+    """
+    model = CartItem
+    template_name = 'shop/cart.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(cart__user=self.request.user)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+
+        cart_items = self.get_queryset()
+        total_quantity = cart_items.count()
+        total_price = sum(
+            item.product.price * item.quantity for item in cart_items
+        )
+
+        return JsonResponse({
+            'success': True,
+            'total_quantity': total_quantity,
+            'total_price': total_price
+        })
+
+
+class ClearCartView(LoginRequiredMixin, View):
+    """
+    Очищает корзину пользователя.
+    """
+
+    def post(self, request, *args, **kwargs):
+        cart = get_object_or_404(Cart, user=request.user)
+        cart.items.all().delete()
+        return redirect('shop:view_cart')
 
 
 def page_not_found(request, exception):

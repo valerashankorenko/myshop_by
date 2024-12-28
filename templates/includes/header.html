@@ -1,0 +1,47 @@
+{% load static %}
+<header class="bg-gradient">
+  <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop:index' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop:view_cart' %}">
+                Корзина 
+                {% if total_quantity > 0 %}
+                    <span class="badge bg-light text-dark">{{ total_quantity }}</span>
+                {% endif %}
+            </a>
+          </li>  
+        </ul>
+      </div>
+        {% if user.is_authenticated %}
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-dark dropdown-toggle custom-dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Личный кабинет
+                </button>
+                <ul class="dropdown-menu bg-dark text-white custom-dropdown-menu">
+                    <li><a class="dropdown-item text-white" href="{% url 'users:profile' user.username %}">Профиль</a></li>
+                    <li><a class="dropdown-item text-white" href="{% url 'logout' %}">Выйти</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-dark dropdown-toggle custom-dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Вход/Регистрация
+                </button>
+                <ul class="dropdown-menu bg-dark text-white custom-dropdown-menu">
+                    <li><a class="dropdown-item text-white" href="{% url 'login' %}">Войти</a></li>
+                    <li><a class="dropdown-item text-white" href="{% url 'users:registration' %}">Регистрация</a></li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Myshop_by</h1>
+    <div class="categories">
+        {% for parent_category in category_list %}
+            <div class="category">
+                <h2>{{ parent_category.name }}</h2>
+                <ul class="subcategory-list">
+                    {% for subcategory in parent_category.subcategories.all %}
+                        <li class="subcategory">
+                            <a href="{% url 'shop:product_list' category_id=subcategory.id %}">{{ subcategory.name }}</a>
+                        </li>
+                    {% empty %}
+                        <li>Нет подкатегорий</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% empty %}
+            <p>Нет главных категорий</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+      <h3 class="mb-3 text-center">Личный кабинет:<br>
+          {{ user.get_full_name }}</h3>
+      <div class="text-center mb-4">
+        <p class="mb-1 text-dark">Регистрация: {{ user.date_joined|date:"d.m.Y в H:i" }}</p>
+      </div>
+
+      {% if user.is_authenticated and request.user == user %}
+      <div class="d-flex justify-content-center mb-4">
+        <a class="btn btn-outline-dark btn-m me-3 shadow-sm" href="{% url 'users:edit_profile' %}">
+          <i class="bi bi-pencil"></i> Редактировать профиль
+        </a>
+        <a class="btn btn-outline-dark btn-m shadow-sm" href="{% url 'password_change' %}">
+          <i class="bi bi-lock"></i> Изменить пароль
+        </a>
+      </div>
+      {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -10,7 +10,8 @@ class ParentCategory(models.Model):
     """
     name = models.CharField(
         'Название главной категории',
-        max_length=255
+        max_length=255,
+        unique=True
     )
 
     class Meta:
@@ -27,7 +28,8 @@ class Category(models.Model):
     """
     name = models.CharField(
         'Название подкатегории',
-        max_length=255
+        max_length=255,
+        unique=True
     )
     parent = models.ForeignKey(
         ParentCategory,
@@ -52,7 +54,8 @@ class Product(models.Model):
     """
     name = models.CharField(
         'Название товара',
-        max_length=255
+        max_length=255,
+        unique=True
     )
     description = models.TextField(
         'Описание товара',

@@ -5,7 +5,7 @@ from django.urls import include, path
 from myshop import settings
 
 urlpatterns = [
-    path('', include('shop.urls', namespace='pages')),
+    path('', include('shop.urls', namespace='shop')),
     path('', include('users.urls', namespace='users')),
     path('auth/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),

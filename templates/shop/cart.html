@@ -1,14 +1,55 @@
-<!-- Шаблон для отображения содержимого корзины -->
-<h1>Корзина</h1>
-{% if cart.items.count > 0 %}
-    <ul>
-        {% for item in cart.items.all %}
-            <li>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Корзина
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Корзина {{ user.get_full_name }}</h2>
+    {% if cart_items.count > 0 %}
+    <ul id="cart-items">
+        {% for item in cart_items %}
+            <li id="item-{{ item.pk }}">
                 {{ item.product.name }} - {{ item.quantity }} шт. - {{ item.product.price }} р.
+                <button class="delete-button" data-id="{{ item.pk }}">Удалить</button>
             </li>
         {% endfor %}
     </ul>
-    <p>Итого: {{ cart.items.aggregate(Sum('quantity')) }} товаров</p>
-{% else %}
-    <p>Корзина пуста.</p>
-{% endif %}
+    <p>Итого: <span id="total-quantity">{{ total_quantity }}</span> товаров</p>
+    <p>Общая сумма: <span id="total-price">{{ total_price }}</span> р.</p>
+    <form action="{% url 'shop:clear_cart' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Очистить корзину</button>
+    </form>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.getAttribute('data-id');
+            fetch(`/cart/delete/${itemId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`item-${itemId}`).remove(); // Удаляем элемент из списка
+
+                    // Обновляем общую стоимость и количество
+                    document.getElementById('total-quantity').innerText = data.total_quantity;
+                    document.getElementById('total-price').innerText = data.total_price.toFixed(2) + ' р.'; // Форматируем стоимость
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+{% endblock %}

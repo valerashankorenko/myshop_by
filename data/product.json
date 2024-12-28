@@ -4,7 +4,7 @@
         "description": "Смартфон с отличной камерой и производительностью.",
         "price": 499.99,
         "stock": 50,
-        "image": "image/products/smartphone1.jpg",
+        "image": "products/smartphone1.jpg",
         "category": 1
     },
     {

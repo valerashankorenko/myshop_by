@@ -1,4 +1,20 @@
-<form action="{% url 'add_to_cart' product.id %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Добавить в корзину</button>
-</form>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+{{ product.name }} - Подробно о товаре
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ product.name }}</h2>
+    <p><strong>Цена:</strong> {{ product.price }} руб.</p>
+    <p><strong>Описание:</strong> {{ product.description }}</p>
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% endif %}
+    <form action="{% url 'shop:add_to_cart' product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Добавить в корзину</button>
+    </form>
+</div>
+{% endblock %}
