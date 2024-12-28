@@ -19,7 +19,7 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'shop/product_detail.html', {'product': product})
 
-@login_required
+
 def add_to_cart(request, product_id):
     """
     Добавляет продукт в корзину. Если продукт уже есть в корзине, увеличивает его количество.
@@ -38,7 +38,7 @@ def add_to_cart(request, product_id):
 
     return redirect('product_detail', product_id=product.id)
 
-@login_required
+
 def view_cart(request):
     """
     Отображает содержимое корзины для авторизованного пользователя.

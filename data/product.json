@@ -1,0 +1,202 @@
+[
+    {
+        "name": "Смартфон 1",
+        "description": "Смартфон с отличной камерой и производительностью.",
+        "price": 499.99,
+        "stock": 50,
+        "image": "image/products/smartphone1.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 2",
+        "description": "Смартфон с большим экраном и долгим временем работы.",
+        "price": 599.99,
+        "stock": 30,
+        "image": "products/smartphone2.jpg",
+        "category": 1
+    },
+    {
+        "name": "Планшет 1",
+        "description": "Планшет с отличной камерой и производительностью.",
+        "price": 499.99,
+        "stock": 50,
+        "image": "products/tablet1.jpg",
+        "category": 3
+    },
+    {
+        "name": "Планшет 2",
+        "description": "Планшет с большим экраном и долгим временем работы.",
+        "price": 599.99,
+        "stock": 30,
+        "image": "products/tablet2.jpg",
+        "category": 3
+    },
+    {
+        "name": "Телевизор 1",
+        "description": "Ультратонкий телевизор с поддержкой 4K.",
+        "price": 799.99,
+        "stock": 20,
+        "image": "products/tv1.jpg",
+        "category": 2
+    },
+    {
+        "name": "Телевизор 2",
+        "description": "Смарт-телевизор с функцией голосового управления.",
+        "price": 899.99,
+        "stock": 15,
+        "image": "products/tv2.jpg",
+        "category": 2
+    },
+    {
+        "name": "Наушники 1",
+        "description": "Отличные наушники.",
+        "price": 19.99,
+        "stock": 15,
+        "image": "products/headphones1.jpg",
+        "category": 4
+    },
+    {
+        "name": "Наушники 2",
+        "description": "Наушники с шумоподавлением.",
+        "price": 29.99,
+        "stock": 15,
+        "image": "products/headphones2.jpg",
+        "category": 4
+    },
+    {
+        "name": "Смарт-часы 1",
+        "description": "Легкие смарт-часы.",
+        "price": 59.99,
+        "stock": 15,
+        "image": "products/smart_watch1.jpg",
+        "category": 6
+    },
+    {
+        "name": "Смарт-часы 2",
+        "description": "Спортивные смарт-часы.",
+        "price": 99.99,
+        "stock": 15,
+        "image": "products/smart_watch2.jpg",
+        "category": 6
+    },
+    {
+        "name": "Ноутбук 1",
+        "description": "Мощный ноутбук для игр и работы.",
+        "price": 1099.99,
+        "stock": 25,
+        "image": "products/laptop1.jpg",
+        "category": 11
+    },
+    {
+        "name": "Стиральная машина 1",
+        "description": "Эффективная стиральная машина с функцией отжима.",
+        "price": 399.99,
+        "stock": 40,
+        "image": "products/washing_machine1.jpg",
+        "category": 21
+    },
+    {
+        "name": "Холодильник 1",
+        "description": "Холодильник с большой вместимостью и низким энергопотреблением.",
+        "price": 599.99,
+        "stock": 10,
+        "image": "products/fridge1.jpg",
+        "category": 22
+    },
+    {
+        "name": "Стиральная машина 2",
+        "description": "Эффективная стиральная машина с функцией отжима.",
+        "price": 444.99,
+        "stock": 40,
+        "image": "products/washing_machine2.jpg",
+        "category": 21
+    },
+    {
+        "name": "Микроволновка 1",
+        "description": "Микроволновка с большой вместимостью и низким энергопотреблением.",
+        "price": 599.99,
+        "stock": 10,
+        "image": "products/microwave1.jpg",
+        "category": 24
+    },
+    {
+        "name": "Электрическая дрель",
+        "description": "Мощная дрель для домашних и профессиональных работ.",
+        "price": 89.99,
+        "stock": 100,
+        "image": "products/drill.jpg",
+        "category": 33
+    },
+    {
+        "name": "Шуруповерт",
+        "description": "Мощный шуруповерт для домашних и профессиональных работ.",
+        "price": 100.99,
+        "stock": 100,
+        "image": "products/screwdriver.jpg",
+        "category": 33
+    },
+    {
+        "name": "Перфоратор",
+        "description": "Мощный перфоратор для домашних и профессиональных работ.",
+        "price": 159.99,
+        "stock": 100,
+        "image": "products/hammer_drill.jpg",
+        "category": 33
+    },
+    {
+        "name": "Садовая лопата",
+        "description": "Удобная лопата для работы в саду.",
+        "price": 29.99,
+        "stock": 75,
+        "image": "products/shovel.jpg",
+        "category": 43
+    },
+    {
+        "name": "Садовые грабли",
+        "description": "Удобная грабли для работы в саду.",
+        "price": 15.99,
+        "stock": 75,
+        "image": "products/garden_rake.jpg",
+        "category": 43
+    },
+    {
+        "name": "Садовые ножницы",
+        "description": "Удобная ножницы для работы в саду.",
+        "price": 39.99,
+        "stock": 75,
+        "image": "products/garden_shears.jpg",
+        "category": 43
+    },
+    {
+        "name": "Автомобиль 1",
+        "description": "Экономичный и надежный городской автомобиль.",
+        "price": 15000.00,
+        "stock": 5,
+        "image": "products/car1.jpg",
+        "category": 51
+    },
+    {
+        "name": "Автомобиль 2",
+        "description": "Спортивный автомобиль с высокой производительностью.",
+        "price": 25000.00,
+        "stock": 3,
+        "image": "products/car2.jpg",
+        "category": 51
+    },
+    {
+        "name": "Автомобильные шины",
+        "description": "Летние автомобильные шины",
+        "price": 59.99,
+        "stock": 3,
+        "image": "products/tires.jpg",
+        "category": 58
+    },
+    {
+        "name": "Автомобильные диски",
+        "description": "Литые автомобильные диски.",
+        "price": 79.00,
+        "stock": 3,
+        "image": "products/car_wheels.jpg",
+        "category": 58
+    }
+]

@@ -29,7 +29,7 @@ class Category(models.Model):
         'Название подкатегории',
         max_length=255
     )
-    parent_id = models.ForeignKey(
+    parent = models.ForeignKey(
         ParentCategory,
         null=True,
         blank=True,
@@ -62,7 +62,7 @@ class Product(models.Model):
         max_digits=10,
         decimal_places=2
     )
-    stock = models.PositiveIntegerFieldField(
+    stock = models.PositiveIntegerField(
         'Количество товара на складе',
     )
     image = models.ImageField(
