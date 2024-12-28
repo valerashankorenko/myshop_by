@@ -5,13 +5,19 @@ from . import views
 app_name = 'shop'
 
 urlpatterns = [
-    path('', views.category_list, name='category_list'),
+    path('',
+         views.CategoryListView.as_view(),
+         name='category_list'),
     path('category/<int:category_id>/',
-         views.product_list,
+         views.ProductListView.as_view(),
          name='product_list'),
     path('product/<int:product_id>/',
-         views.product_detail,
+         views.ProductDetailView.as_view(),
          name='product_detail'),
-    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
-    path('cart/', views.view_cart, name='view_cart'),
+    path('add_to_cart/<int:product_id>/',
+         views.CartCreateView.as_view(),
+         name='add_to_cart'),
+    path('cart/',
+         views.CartListView.as_view(),
+         name='view_cart'),
 ]
