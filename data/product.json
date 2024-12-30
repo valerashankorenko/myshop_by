@@ -16,6 +16,70 @@
         "category": 1
     },
     {
+        "name": "Смартфон 3",
+        "description": "Бюджетный смартфон с большим экраном и долгим временем работы.",
+        "price": 199.99,
+        "stock": 30,
+        "image": "products/smartphone3.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 4",
+        "description": "Компактный телефон. Легкий вес.",
+        "price": 299.99,
+        "stock": 30,
+        "image": "products/smartphone4.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 5",
+        "description": "Хороший смартфон  для школьника.",
+        "price": 99.99,
+        "stock": 30,
+        "image": "products/smartphone5.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 6",
+        "description": "Топовый смартфон с хорошей батарей.",
+        "price": 1099.99,
+        "stock": 30,
+        "image": "products/smartphone6.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 7",
+        "description": "Среднебюджетный смартфон с хорошей камерой.",
+        "price": 599.99,
+        "stock": 30,
+        "image": "products/smartphone7.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 8",
+        "description": "Игровой смартфон с долгим временем работы.",
+        "price": 999.99,
+        "stock": 30,
+        "image": "products/smartphone8.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 9",
+        "description": "Смартфон с маленьким экраном.",
+        "price": 299.99,
+        "stock": 30,
+        "image": "products/smartphone9.jpg",
+        "category": 1
+    },
+    {
+        "name": "Смартфон 10",
+        "description": "Смартфон с долгим временем работы.",
+        "price": 599.99,
+        "stock": 30,
+        "image": "products/smartphone10.jpg",
+        "category": 1
+    },
+    {
         "name": "Планшет 1",
         "description": "Планшет с отличной камерой и производительностью.",
         "price": 499.99,
@@ -85,6 +149,14 @@
         "price": 1099.99,
         "stock": 25,
         "image": "products/laptop1.jpg",
+        "category": 11
+    },
+    {
+        "name": "Ноутбук 2",
+        "description": "Легкий и быстрый ноутбук.",
+        "price": 599.99,
+        "stock": 25,
+        "image": "products/laptop2.jpg",
         "category": 11
     },
     {

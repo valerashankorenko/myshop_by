@@ -3,27 +3,29 @@
 {% block title %}
 {{ category.name }}
 {% endblock %}
-
 {% block content %}
 <div class="container">
-    <h1> {{ category.name }}</h1>
-    <div class="product_list">
-        {% for product in product_list %}
-            <div class="product">
-                <h2>{{ product.name }}</h2>
-                <p><strong>Цена:</strong> {{ product.price }} руб.</p>
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                {% endif %}
-                <form action="{% url 'shop:add_to_cart' product.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Добавить в корзину</button>
-                </form>
-                <a href="{% url 'shop:product_detail' product_id=product.id %}">Подробнее</a>
-            </div>
-        {% empty %}
-            <p>Нет товаров в этой категории.</p>
-        {% endfor %}
-    </div>
+	<h1>{{ category.name }}</h1>
+	<div class="product_list">
+		{% for product in product_list %}
+		<div class="product">
+			<h2>{{ product.name }}</h2>
+			<p><strong>Цена:</strong> {{ product.price }} руб.</p>
+			{% if product.image %}
+			<img src="{{ product.image.url }}" alt="{{ product.name }}" />
+			{% endif %}
+			<form action="{% url 'shop:add_to_cart' product.id %}" method="post">
+				{% csrf_token %}
+				<button type="submit">Добавить в корзину</button>
+			</form>
+			<a href="{% url 'shop:product_detail' product_id=product.id %}"
+				>Подробнее</a
+			>
+		</div>
+		{% empty %}
+		<p>Нет товаров в этой категории.</p>
+		{% endfor %}
+		<!-- Пагинация -->
+	</div>
 </div>
 {% endblock %}

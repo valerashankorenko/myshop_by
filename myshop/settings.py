@@ -73,7 +73,24 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# Настройки для подключения БД Postgresql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB', 'django'),
+#         'USER': os.getenv('POSTGRES_USER', 'django'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+#         'HOST': os.getenv('DB_HOST', ''),
+#         'PORT': os.getenv('DB_PORT', 5432)
+#     }
+# }
+# Данные для подключения БД Postgresql для .env файла
+# POSTGRES_DB=your_name_db
+# POSTGRES_USER=your_name_user
+# POSTGRES_PASSWORD=your_password
+# DB_NAME=your_name_db
+# DB_HOST=your_name_host
+# DB_PORT=your_port
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
