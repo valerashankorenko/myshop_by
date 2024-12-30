@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}
 Корзина
 {% endblock %}
@@ -17,7 +18,7 @@
         {% endfor %}
     </ul>
     <p>Итого: <span id="total-quantity">{{ total_quantity }}</span> товаров</p>
-    <p>Общая сумма: <span id="total-price">{{ total_price }}</span> р.</p>
+    <p>Общая сумма: <span id="total-price">{{ total_price  }}</span> р.</p>
     <form action="{% url 'shop:clear_cart' %}" method="post">
         {% csrf_token %}
         <button type="submit">Очистить корзину</button>

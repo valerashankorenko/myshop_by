@@ -24,7 +24,7 @@ class CategoryListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            cart = get_object_or_404(Cart, user=self.request.user)
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
             context['total_quantity'] = cart.items.aggregate(Sum('quantity'))[
                 'quantity__sum'] or 0
         else:
@@ -107,8 +107,9 @@ class CartListView(LoginRequiredMixin, ListView):
         cart = get_object_or_404(Cart, user=self.request.user)
         context['total_quantity'] = cart.items.aggregate(Sum('quantity'))[
             'quantity__sum'] or 0
-        context['total_price'] = cart.items.aggregate(Sum('product__price'))[
+        total_price = cart.items.aggregate(Sum('product__price'))[
             'product__price__sum'] or 0
+        context['total_price'] = round(total_price, 2)
         return context
 
 

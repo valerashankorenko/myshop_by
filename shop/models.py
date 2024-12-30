@@ -110,7 +110,7 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     """
-    Модель для корзины, который содержит продукт и его количество.
+    Модель для корзины, который содержит товар и его количество.
     """
     cart = models.ForeignKey(
         Cart,
