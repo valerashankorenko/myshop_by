@@ -51,6 +51,12 @@ class ProductListView(ListView):
         category_id = self.kwargs.get('category_id')
         category = get_object_or_404(Category, id=category_id)
         context['category'] = category
+        if self.request.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
+            context['total_quantity'] = cart.items.aggregate(Sum('quantity'))[
+                'quantity__sum'] or 0
+        else:
+            context['total_quantity'] = 0
         return context
 
 
@@ -63,6 +69,16 @@ class ProductDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return self.get_queryset().get(id=self.kwargs['product_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
+            context['total_quantity'] = cart.items.aggregate(Sum('quantity'))[
+                'quantity__sum'] or 0
+        else:
+            context['total_quantity'] = 0
+        return context
 
 
 class CartCreateView(LoginRequiredMixin, CreateView):
@@ -79,9 +95,14 @@ class CartCreateView(LoginRequiredMixin, CreateView):
 
         cart_item, created = CartItem.objects.get_or_create(
             cart=cart, product=product)
-        if not created:
+        if created:
+            # Если товар был создан, устанавливаем количество на 1
+            cart_item.quantity = 1
+        else:
+            # Если товар уже существует, увеличиваем количество на 1
             cart_item.quantity += 1
-            cart_item.save()
+
+        cart_item.save()
 
         referer = request.META.get('HTTP_REFERER')
         if referer:

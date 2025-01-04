@@ -47,19 +47,26 @@ pip install -r requirements.txt
 ```shell
 python manage.py migrate
 ```
-7. Создать суперпользователя
-```shell
-python manage.py createsuperuser
-```
-8. Наполнение базы данных тестовыми данными
-```shell
-python manage.py load_database
-```
-9. В корневой директории создать файл .env и заполнить своими данными:
+7. В корневой директории создать файл .env и заполнить своими данными:
 ```
 DJANGO_DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 SECRET_KEY=секретный ключ Django
+Данные для суперпользователя
+DJANGO_SUPERUSER_USERNAME=your_first_username
+DJANGO_SUPERUSER_EMAIL=email
+DJANGO_SUPERUSER_PASSWORD=password
+DJANGO_SUPERUSER_FIRST_NAME=your_first_name
+DJANGO_SUPERUSER_LAST_NAME=your_last_name
+'DJANGO_SUPERUSER_PHONE_NUMBER'=your_phone_number(Формат номера: +375XXXXXXXXX)
+```
+8. Создать суперпользователя
+```shell
+python manage.py create_superuser
+```
+9. Наполнение базы данных тестовыми данными
+```shell
+python manage.py load_database
 ```
 10. Запуск тестов 
 ```shell
