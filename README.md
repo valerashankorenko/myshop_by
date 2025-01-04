@@ -58,7 +58,7 @@ DJANGO_SUPERUSER_EMAIL=email
 DJANGO_SUPERUSER_PASSWORD=password
 DJANGO_SUPERUSER_FIRST_NAME=your_first_name
 DJANGO_SUPERUSER_LAST_NAME=your_last_name
-'DJANGO_SUPERUSER_PHONE_NUMBER'=your_phone_number(Формат номера: +375XXXXXXXXX)
+DJANGO_SUPERUSER_PHONE_NUMBER=your_phone_number(Формат номера: +375XXXXXXXXX)
 ```
 8. Создать суперпользователя
 ```shell

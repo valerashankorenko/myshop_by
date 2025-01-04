@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, DetailView
 
+from shop.views import BaseView
 from users.forms import ProfileCreateUpdateForm
 
 User = get_user_model()
@@ -19,7 +20,7 @@ class ProfileCreateView(CreateView):
     success_url = reverse_lazy('login')
 
 
-class ProfileDetailView(LoginRequiredMixin, DetailView):
+class ProfileDetailView(LoginRequiredMixin, DetailView, BaseView):
     """
     Просмотр профиля пользователя
     """
@@ -31,10 +32,11 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        self.add_cart_quantity_to_context(context)
         return context
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, UpdateView, BaseView):
     """
     Редактирование профиля, требующее логина.
     """
