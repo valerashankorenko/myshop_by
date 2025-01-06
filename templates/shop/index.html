@@ -12,10 +12,13 @@
         {% for parent_category in category_list %}
             <div class="category">
                 <h2>{{ parent_category.name }}</h2>
+                <hr class="category-divider">
                 <ul class="subcategory-list">
                     {% for subcategory in parent_category.subcategories.all %}
                         <li class="subcategory">
-                            <a href="{% url 'shop:product_list' category_id=subcategory.id %}">{{ subcategory.name }}</a>
+                            <a href="{% url 'shop:product_list' category_id=subcategory.id %}">
+                                <i class="fas fa-box"></i> {{ subcategory.name }}
+                            </a>
                         </li>
                     {% empty %}
                         <li>Нет подкатегорий</li>
@@ -27,4 +30,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}

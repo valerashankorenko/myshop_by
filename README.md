@@ -3,12 +3,6 @@
 ## О проекте
 Веб приложение для интернет магазина, где можно управлять категориями, подкатегориями и товарами, а так же просматривать товары в каталоге.
 
-## Автор проекта:
-Валерий Шанкоренко<br/>
-Github: 👉 [Valera Shankorenko](https://github.com/valerashankorenko)<br/>
-Telegram: 📱 [@valeron007](https://t.me/valeron007)<br/>
-E-mail: 📧 valerashankorenko@yandex.by<br/>
-
 ## Стек технологий
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
@@ -49,7 +43,7 @@ python manage.py migrate
 ```
 7. В корневой директории создать файл .env и заполнить своими данными:
 ```
-DJANGO_DEBUG=True
+DJANGO_DEBUG=True(для разработки)
 ALLOWED_HOSTS=localhost,127.0.0.1
 SECRET_KEY=секретный ключ Django
 Данные для суперпользователя
@@ -76,3 +70,9 @@ python manage.py test
 ```shell
 python manage.py runserver
 ```
+
+## Автор проекта:
+Валерий Шанкоренко<br/>
+Github: 👉 [Valera Shankorenko](https://github.com/valerashankorenko)<br/>
+Telegram: 📱 [@valeron007](https://t.me/valeron007)<br/>
+E-mail: 📧 valerashankorenko@yandex.by<br/>

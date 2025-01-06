@@ -1,172 +1,230 @@
 @font-face {
-    font-family: 'AfacadFlux';
-    src: url('../fonts/AfacadFlux.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
+	font-family: 'AfacadFlux';
+	src: url('../fonts/AfacadFlux.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
 }
 
 * {
-    box-sizing: border-box;
-    font-family: 'AfacadFlux', sans-serif; /* Используйте оба шрифта */
-    margin-bottom: 0;
+	box-sizing: border-box;
+	font-family: 'AfacadFlux', sans-serif; 
+	margin-bottom: 0;
 }
 
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Обеспечивает, что body занимает всю высоту экрана */
-    margin: 0; /* Убирает отступы по умолчанию */
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
+    color: white; 
 }
+
+.container {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 15px; 
+    padding: 20px; 
+    margin-top: 20px; 
+}
+
+h1 {
+    font-size: 3em;
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Header */
 .navbar-nav .nav-link {
-    color: black;
-    transition: color 0.3s ease;
+	color: black;
+	transition: color 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: white; /* Цвет при наведении */
-    animation: pulse 0.6s infinite; /* Анимация пульсации */
+	color: white; /* Цвет при наведении */
+	animation: pulse 0.6s infinite; /* Анимация пульсации */
 }
 
-
 .btn.btn-dark.dropdown-toggle.custom-dropdown-toggle {
-    border-radius: 15px !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Добавление тени */
-    padding: 7px 15px !important;
-    transition: background-color 0.3s, box-shadow 0.3s !important;
-    background-color: black;
+	border-radius: 15px !important;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Добавление тени */
+	padding: 7px 15px !important;
+	transition: background-color 0.3s, box-shadow 0.3s !important;
+	background-color: black;
 }
 
 .btn.btn-dark.dropdown-toggle.custom-dropdown-toggle:hover {
-    background-color: #495057 !important; /* Темнее оттенок серого */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+	background-color: #495057 !important; /* Темнее оттенок серого */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
 .custom-dropdown-menu {
-    border-radius: 15px;
+	border-radius: 15px;
 }
 
 .custom-dropdown-menu .dropdown-item {
-    transition: background-color 0.3s;
+	transition: background-color 0.3s;
 }
 
 .custom-dropdown-menu .dropdown-item:hover {
-    background-color: #495057; /* Еще темнее оттенок серого */
+	background-color: #495057; /* Еще темнее оттенок серого */
 }
+
 
 /* Footer */
 footer {
-    width: 100%; /* Футер занимает всю ширину экрана */
-    background-color: #343a40; /* Цвет фона футера */
-    color: white; /* Цвет текста футера */
-    text-align: center; /* Выравнивание текста по центру */
-    padding: 1rem; /* Отступы вокруг текста */
-    margin-top: auto; /* Позволяет футеру оставаться внизу страницы */
+	width: 100%; /* Футер занимает всю ширину экрана */
+	background-color: #343a40; /* Цвет фона футера */
+	color: white; /* Цвет текста футера */
+	text-align: center; /* Выравнивание текста по центру */
+	padding: 1rem; /* Отступы вокруг текста */
+	margin-top: auto; /* Позволяет футеру оставаться внизу страницы */
+}
+
+.container-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-column, .right-column {
+    flex: 1; /* Занимает равное пространство */
+    text-align: center;
 }
 
 .neon-text {
-  color: #fff;
-  text-shadow:
-    0 0 7px #fff,
-    0 0 10px #fff,
-    0 0 21px #fff,
-    0 0 42px #0fa,
-    0 0 82px #0fa,
-    0 0 92px #0fa,
-    0 0 102px #0fa,
-    0 0 151px #0fa;
+	color: #fff;
+	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+		0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+}
+
+.contact-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.phone-icon {
+    margin-right: 0; /* Убираем отступ только для иконки телефона */
+}
+.contact-icon:hover {
+    transform: translateY(-5px);
+}
+.contact-link {
+    text-decoration: none; /* Убирает подчеркивание */
+}
+.contact-link:hover {
+    text-decoration: none;
 }
 
 /* Кнопки */
 .main-btn {
-    display: inline-block;
-    font-weight: 500;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    padding: 10px 25px;
-    font-size: 20px;
-    border-radius: 15px;
-    color: white;
-    cursor: pointer;
-    z-index: 5;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Плавный переход */
-    border: none;
-    background: black;
+    position: relative;
     overflow: hidden;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Добавление тени */
 }
 
-.main-btn:hover {
-    transform: scale(1.1); /* Увеличение кнопки */
-    background-color: black; /* Изменение цвета фона при наведении */
-    color: white;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7); /* Увеличение тени при наведении */
+.main-btn:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    z-index: 0;
+}
+
+.main-btn:hover:before {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 
 /* Главная страница */
 .subcategory-list {
-    display: none; /* Скрываем подкатегории по умолчанию */
-    list-style-type: none; /* Убираем маркеры списка */
-    padding: 0; /* Убираем отступы */
+	display: none; /* Скрываем подкатегории по умолчанию */
+	list-style-type: none; /* Убираем маркеры списка */
+	padding: 0; /* Убираем отступы */
 }
 
 .category:hover .subcategory-list {
-    display: block; /* Показываем подкатегории при наведении на категорию */
+	display: block; /* Показываем подкатегории при наведении на категорию */
 }
 
 .subcategory {
-    padding-left: 20px; /* Отступ для подкатегорий */
+    padding: 10px 15px; /* Увеличенные отступы */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Полупрозрачная граница */
+    border-radius: 10px; /* Закругленные углы */
+    margin: 5px 0; /* Отступы между подкатегориями */
+    transition: background-color 0.3s;
+}
+
+.subcategory:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Цвет при наведении */
+}
+
+
+.category-divider {
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Полупрозрачная линия */
+    margin: 10px 0; /* Отступы сверху и снизу */
 }
 
 /* Медиа-запросы для мобильных устройств */
 @media (max-width: 768px) {
-    .custom-table td {
-        font-size: 14px; /* Уменьшение размера шрифта */
-        padding: 8px;   /* Уменьшение отступов */
+    h1 {
+        font-size: 2em; /* Уменьшение размера заголовка на мобильных */
     }
 
-    .custom-table th {
-        font-size: 16px; /* Уменьшение размера шрифта заголовка */
+    .subcategory {
+        font-size: 14px; /* Уменьшение размера шрифта для подкатегорий */
     }
 }
 
 
 /* Пагинация */
 .pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
 }
 
 .pagination .page-link {
-    color: black;
-    padding: 10px 15px; /* Измените отступы для кнопок */
-    font-size: 16px; /* Измените размер шрифта */
-    text-decoration: none; /* Уберите подчеркивание */
+	color: black;
+	padding: 10px 15px; /* Измените отступы для кнопок */
+	font-size: 16px; /* Измените размер шрифта */
+	text-decoration: none; /* Уберите подчеркивание */
 }
 
 .pagination .active .page-link {
-    color: white;
-    background-color: gray;
-    border-color: black;
+	color: white;
+	background-color: gray;
+	border-color: black;
 }
 
 .pagination .disabled .page-link {
-    color: gray;
+	color: gray;
 }
 
 .pagination .page-link:hover {
-    color: black; /* Цвет текста при наведении */
-
+	color: black; /* Цвет текста при наведении */
 }
 
 @media (max-width: 768px) {
-    .pagination .page-link {
-        padding: 8px 10px; /* Уменьшите отступы для мобильных устройств */
-        font-size: 11px; /* Уменьшите размер шрифта для мобильных устройств */
-    }
+	.pagination .page-link {
+		padding: 8px 10px; /* Уменьшите отступы для мобильных устройств */
+		font-size: 11px; /* Уменьшите размер шрифта для мобильных устройств */
+	}
 }

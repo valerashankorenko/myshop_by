@@ -1,6 +1,35 @@
 {% load static %}
 <footer class="border-top text-center py-3 bg-dark text-white">
-  <div class="container">
-    <p class="mb-0 neon-text">© 2024 Интернет магазин Myshop_by</p>
-  </div>
+    <div class="container-footer d-flex justify-content-between">
+        <div class="left-column">
+            <p class="mb-0 small mt-2">
+                <img class="contact-icon phone-icon" src="{% static 'img/icons/phone.png' %}" alt="Phone"> 
+                +375(29) 123-45-67
+                <a href="https://www.viber.com/ru/" class="contact-link" target="_blank">
+                    <img class="contact-icon" src="{% static 'img/icons/viber.png' %}" alt="Viber">
+                </a>
+                <a href="https://wa.me/375291234567" class="contact-link" target="_blank">
+                    <img class="contact-icon" src="{% static 'img/icons/watsapp.png' %}" alt="WhatsApp">
+                </a>
+                <a href="https://t.me" class="contact-link" target="_blank">
+                    <img class="contact-icon" src="{% static 'img/icons/telegram.png' %}" alt="Telegram">
+                </a>
+            </p>
+            <p class="email mt-3">
+                <img class="contact-icon" src="{% static 'img/icons/email.png' %}" alt="Email"> your_mail@yandex.by
+            </p>
+        </div>
+        <div class="right-column text-center">
+            <p class="mb-0 small">Социальные сети:</p>
+            <div class="d-flex justify-content-center mt-2">
+                <a href="https://www.instagram.com" target="_blank" class="contact-link">
+                    <img class="contact-icon" src="{% static 'img/icons/instagram.png' %}" alt="Instagram">
+                </a>
+                <a href="https://www.vk.ru" target="_blank" class="contact-link">
+                    <img class="contact-icon" src="{% static 'img/icons/vk.png' %}" alt="VK">
+                </a>
+            </div>
+        </div>
+    </div>
+    <p class="mb-0 neon-text text-center">© 2025 Интернет магазин Myshop_by</p>
 </footer>
