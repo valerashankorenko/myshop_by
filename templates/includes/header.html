@@ -14,11 +14,15 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'shop:view_cart' %}">
                 Корзина 
-                {% if total_quantity > 0 %}
-                    <span class="badge bg-light text-dark">{{ total_quantity }}</span>
-                {% endif %}
+                <span id="header-cart-quantity" class="badge bg-light text-dark">
+                    {% if total_quantity > 0 %}
+                        {{ total_quantity }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </span>
             </a>
-          </li>  
+          </li>
         </ul>
       </div>
         {% if user.is_staff %}

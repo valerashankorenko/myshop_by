@@ -7,123 +7,111 @@
 
 {% block content %}
 <div class="container">
-    <h2>Корзина {{ user.get_full_name }}</h2>
+    <h2>Корзина: {{ user.get_full_name }}</h2>
     {% if cart_items.count > 0 %}
-    <ul id="cart-items">
-        {% for cart_item in cart_items_with_total_price %}
-        <li id="item-{{ cart_item.item.pk }}">
-            {{ cart_item.item.product.name }} - <span class="item-quantity">{{ cart_item.item.quantity }}</span> шт. - 
-            <span class="item-price">{{ cart_item.total_price }}</span> р.
-            <button class="increase-button" data-id="{{ cart_item.item.pk }}">+</button>
-            <button class="decrease-button" data-id="{{ cart_item.item.pk }}">-</button>
-            <button class="delete-button" data-id="{{ cart_item.item.pk }}">Удалить</button>
-        </li>
-        {% endfor %}
-    </ul>
-    <p>Итого: <span id="total-quantity">{{ total_quantity }}</span> товаров</p>
-    <p>Общая сумма: <span id="total-price">{{ total_price }}</span> р.</p>
-    <form action="{% url 'shop:clear_cart' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Очистить корзину</button>
-    </form>
+        <ul id="cart-items">
+            {% for cart_item in cart_items_with_total_price %}
+                <li id="item-{{ cart_item.item.pk }}" data-id="{{ cart_item.item.pk }}">
+                    {{ cart_item.item.product.name }} -
+                    <span class="item-quantity">{{ cart_item.item.quantity }}</span> шт. -
+                    <span class="item-price">{{ cart_item.total_price }}</span> р.
+                    <button class="increase-button">+</button>
+                    <button class="decrease-button">-</button>
+                    <button class="delete-button">Удалить</button>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Итого: <span id="total-quantity">{{ total_quantity }}</span> товаров</p>
+        <p>Общая сумма: <span id="total-price">{{ total_price }}</span> р.</p>
+        <form action="{% url 'shop:clear_cart' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Очистить корзину</button>
+        </form>
     {% else %}
         <p>Ваша корзина пуста.</p>
     {% endif %}
 </div>
 <script>
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const itemId = this.getAttribute('data-id');
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    function formatPrice(price) {
+        return parseFloat(price).toFixed(2);
+    }
+
+    function updateCartDisplay(data) {
+        document.getElementById('total-quantity').textContent = data.total_quantity;
+        document.getElementById('total-price').textContent = formatPrice(data.total_price);
+
+        // Обновляем количество товаров в хедере
+        const headerCartQuantity = document.getElementById('header-cart-quantity');
+        if (headerCartQuantity) {
+            headerCartQuantity.textContent = data.total_quantity;
+        }
+
+        // Если корзина пуста, обновляем содержимое контейнера
+        if (data.total_quantity === 0) {
+            const container = document.querySelector('.container');
+            container.innerHTML = `<p>Ваша корзина пуста.</p>`;
+        }
+    }
+
+    function handleCartItemUpdate(itemId, url, method = 'POST') { 
+        fetch(url, {
+            method: method,
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const itemElement = document.getElementById(`item-${itemId}`);
+                if (data.new_quantity === 0) { 
+                    // Удаляем элемент из DOM, если новое количество равно 0
+                    if (itemElement) itemElement.remove();
+                } else {
+                    // Обновляем количество и цену товара
+                    itemElement.querySelector('.item-quantity').textContent = data.new_quantity;
+                    itemElement.querySelector('.item-price').textContent = formatPrice(data.item_total);
+                }
+                updateCartDisplay(data);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при обновлении товара в корзине:', error);
+        });
+    }
+
+    document.addEventListener('click', function(event) {
+        const itemElement = event.target.closest('li');
+        if (!itemElement) return;
+        const itemId = itemElement.dataset.id;
+    
+        if (event.target.classList.contains('increase-button')) {
+            handleCartItemUpdate(itemId, `/cart/increase/${itemId}/`);
+        } else if (event.target.classList.contains('decrease-button')) {
+            handleCartItemUpdate(itemId, `/cart/decrease/${itemId}/`);
+        } else if (event.target.classList.contains('delete-button')) {
             fetch(`/cart/delete/${itemId}/`, {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-CSRFToken': csrftoken,
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById(`item-${itemId}`).remove(); 
-                    document.getElementById('total-quantity').innerText = data.total_quantity;
-                    document.getElementById('total-price').innerText = data.total_price.toFixed(2) + ' р.';
+                    // Удаляем элемент из DOM
+                    itemElement.remove();
+                    updateCartDisplay(data); // Обновляем отображение корзины
                 }
             })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-
-    document.querySelectorAll('.increase-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const itemId = this.getAttribute('data-id');
-            fetch(`/cart/increase/${itemId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    const quantityElement = document.querySelector(`#item-${itemId} .item-quantity`);
-                    const priceElement = document.querySelector(`#item-${itemId} .item-price`);
-
-                    // Обновляем количество и общую сумму товара
-                    quantityElement.innerText = data.new_quantity;
-                    priceElement.innerText = (data.new_quantity * data.product_price).toFixed(2) + ' р.';
-
-                    // Обновляем общую сумму и количество в корзине
-                    document.getElementById('total-quantity').innerText = data.total_quantity;
-                    document.getElementById('total-price').innerText = data.total_price.toFixed(2) + ' р.';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-
-    document.querySelectorAll('.decrease-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const itemId = this.getAttribute('data-id');
-            fetch(`/cart/decrease/${itemId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    const quantityElement = document.querySelector(`#item-${itemId} .item-quantity`);
-                    const priceElement = document.querySelector(`#item-${itemId} .item-price`);
-
-                    // Обновляем количество и общую сумму товара
-                    quantityElement.innerText = data.new_quantity;
-                    priceElement.innerText = (data.new_quantity * data.product_price).toFixed(2) + ' р.';
-
-                    // Обновляем общую сумму и количество в корзине
-                    document.getElementById('total-quantity').innerText = data.total_quantity;
-                    document.getElementById('total-price').innerText = data.total_price.toFixed(2) + ' р.';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
+            .catch(error => {
+                console.error('Ошибка при удалении товара:', error);
+            });
+        }
+    });    
 </script>
 {% endblock %}

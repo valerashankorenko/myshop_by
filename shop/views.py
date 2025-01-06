@@ -20,13 +20,14 @@ class BaseView:
         """
         Получает корзину текущего пользователя.
 
-        Если пользователь аутентифицирован,
-        возвращает корзину, связанная с пользователем.
+        Если пользователь аутентифицирован, возвращает корзину,
+        связанную с пользователем.
 
         Если корзина не существует, создаёт новую.
         """
         if self.request.user.is_authenticated:
-            return Cart.objects.get_or_create(user=self.request.user)[0]
+            cart, created = Cart.objects.get_or_create(user=self.request.user)
+            return cart
         return None
 
     def get_cart_quantity(self):
@@ -34,21 +35,28 @@ class BaseView:
         Подсчитывает общее количество товаров в корзине текущего пользователя.
         """
         cart = self.get_cart()
-        return cart.items.aggregate(Sum('quantity'))['quantity__sum'] or 0
+        return cart.items.aggregate(
+            Sum('quantity'))['quantity__sum'] or 0 if cart else 0
 
     def get_cart_total_price(self):
         """
         Подсчитывает общую стоимость товаров в корзине текущего пользователя.
         """
         cart = self.get_cart()
-        return round(cart.items.aggregate(Sum('product__price'))['product__price__sum'] or 0, 2)
+        if cart:
+            return round(
+                sum(
+                    item.quantity * item.product.price
+                    for item in cart.items.all()
+                ), 2
+            )
+        return 0.0
 
     def add_cart_quantity_to_context(self, context):
         """
         Добавляет общее количество товаров в корзине в указанный контекст.
         """
         context['total_quantity'] = self.get_cart_quantity()
-        # Добавляем общую цену в контекст
         context['total_price'] = self.get_cart_total_price()
 
 
@@ -93,8 +101,7 @@ class ProductListView(BaseView, ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = get_object_or_404(
             Category, id=self.kwargs.get('category_id'))
-        context['search_query'] = self.request.GET.get(
-            'search', '')
+        context['search_query'] = self.request.GET.get('search', '')
         self.add_cart_quantity_to_context(context)
         return context
 
@@ -148,6 +155,9 @@ class CartIncreaseView(BaseView, LoginRequiredMixin, View):
             'new_quantity': cart_item.quantity,
             'total_quantity': self.get_cart_quantity(),
             'total_price': self.get_cart_total_price(),
+            'product_price': cart_item.product.price,
+            'item_total': round(
+                cart_item.quantity * cart_item.product.price, 2)
         })
 
 
@@ -157,19 +167,26 @@ class CartDecreaseView(BaseView, LoginRequiredMixin, View):
     """
 
     def post(self, request, item_id):
-        cart_item = get_object_or_404(CartItem, id=item_id)
+        cart_item = get_object_or_404(
+            CartItem, id=item_id, cart__user=self.request.user)
+        new_quantity = cart_item.quantity - 1
 
-        if cart_item.quantity > 1:
-            cart_item.quantity -= 1
+        if new_quantity > 0:
+            cart_item.quantity = new_quantity
             cart_item.save()
+            item_total = round(cart_item.quantity * cart_item.product.price, 2)
         else:
-            cart_item.delete()  # Удаляем элемент, если количество 1
+            cart_item.delete()
+            item_total = 0
+            new_quantity = 0
 
         return JsonResponse({
             'success': True,
-            'new_quantity': cart_item.quantity,
+            'new_quantity': new_quantity,
             'total_quantity': self.get_cart_quantity(),
             'total_price': self.get_cart_total_price(),
+            'product_price': cart_item.product.price,
+            'item_total': item_total
         })
 
 
@@ -183,14 +200,12 @@ class CartListView(BaseView, LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         cart = self.get_cart()
-        return cart.items.all()
+        return cart.items.all() if cart else CartItem.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['total_quantity'] = self.get_cart_quantity()
-        context['total_price'] = self.get_cart_total_price()
+        self.add_cart_quantity_to_context(context)
 
-        # Добавляем общую стоимость для каждого товара в корзине
         context['cart_items_with_total_price'] = [
             {
                 'item': item,
@@ -201,7 +216,7 @@ class CartListView(BaseView, LoginRequiredMixin, ListView):
         return context
 
 
-class CartItemDeleteView(LoginRequiredMixin, DeleteView):
+class CartItemDeleteView(BaseView, LoginRequiredMixin, DeleteView):
     """
     Удаляет товар из корзины.
     """
@@ -215,16 +230,11 @@ class CartItemDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         self.object.delete()
 
-        cart_items = self.get_queryset()
-        total_quantity = cart_items.count()
-        total_price = sum(item.product.price *
-                          item.quantity for item in cart_items)
-
-        return JsonResponse(
-            {'success': True,
-             'total_quantity': total_quantity,
-             'total_price': total_price}
-        )
+        return JsonResponse({
+            'success': True,
+            'total_quantity': self.get_cart_quantity(),
+            'total_price': self.get_cart_total_price(),
+        })
 
 
 class ClearCartView(BaseView, LoginRequiredMixin, View):
@@ -234,7 +244,8 @@ class ClearCartView(BaseView, LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         cart = self.get_cart()
-        cart.items.all().delete()
+        if cart:
+            cart.items.all().delete()
         return redirect('shop:view_cart')
 
 
