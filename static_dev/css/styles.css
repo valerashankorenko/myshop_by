@@ -21,10 +21,7 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 15px; 
-    padding: 20px; 
-    margin-top: 20px; 
+    background: rgba(255, 255, 255, 0.0); 
 }
 
 h1 {
@@ -80,117 +77,225 @@ h1 {
 	background-color: #495057; /* Еще темнее оттенок серого */
 }
 
-
-/* Footer */
-footer {
-	width: 100%; /* Футер занимает всю ширину экрана */
-	background-color: #343a40; /* Цвет фона футера */
-	color: white; /* Цвет текста футера */
-	text-align: center; /* Выравнивание текста по центру */
-	padding: 1rem; /* Отступы вокруг текста */
-	margin-top: auto; /* Позволяет футеру оставаться внизу страницы */
-}
-
-.container-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.left-column, .right-column {
-    flex: 1; /* Занимает равное пространство */
+/* Главная страница */
+.intro-text {
+    font-size: 1.2em;
+    margin-bottom: 40px;
     text-align: center;
 }
 
-.neon-text {
-	color: #fff;
-	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
-		0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.contact-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 8px;
+.category {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin: 15px;
+    padding: 20px;
+    width: 300px;
+    cursor: pointer;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
 
-.phone-icon {
-    margin-right: 0; /* Убираем отступ только для иконки телефона */
-}
-.contact-icon:hover {
+.category:hover {
     transform: translateY(-5px);
 }
-.contact-link {
-    text-decoration: none; /* Убирает подчеркивание */
-}
-.contact-link:hover {
-    text-decoration: none;
-}
 
-/* Кнопки */
-.main-btn {
-    position: relative;
-    overflow: hidden;
+.category h2 {
+    margin: 0;
+    font-size: 1.8em;
 }
 
-.main-btn:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.5s ease;
-    z-index: 0;
-}
-
-.main-btn:hover:before {
-    transform: translate(-50%, -50%) scale(1);
-}
-
-
-/* Главная страница */
 .subcategory-list {
-	display: none; /* Скрываем подкатегории по умолчанию */
-	list-style-type: none; /* Убираем маркеры списка */
-	padding: 0; /* Убираем отступы */
-}
-
-.category:hover .subcategory-list {
-	display: block; /* Показываем подкатегории при наведении на категорию */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
 }
 
 .subcategory {
-    padding: 10px 15px; /* Увеличенные отступы */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Полупрозрачная граница */
-    border-radius: 10px; /* Закругленные углы */
-    margin: 5px 0; /* Отступы между подкатегориями */
+    padding: 10px 0;
     transition: background-color 0.3s;
 }
 
+.subcategory a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+}
+
 .subcategory:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Цвет при наведении */
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-
-.category-divider {
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Полупрозрачная линия */
-    margin: 10px 0; /* Отступы сверху и снизу */
+.empty-category {
+    color: rgba(255, 255, 255, 0.6);
 }
 
-/* Медиа-запросы для мобильных устройств */
+.no-categories {
+    font-size: 1.5em;
+    margin-top: 30px;
+}
+
+/* Для мобильных устройств */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2em; /* Уменьшение размера заголовка на мобильных */
+    .main-title {
+        font-size: 2.5em;
     }
 
-    .subcategory {
-        font-size: 14px; /* Уменьшение размера шрифта для подкатегорий */
+    .category {
+        width: 90%;
     }
+}
+
+/* Подкатегории */
+.cards-img-top {
+    margin: -20px;
+    width: 300px;
+    height: 250px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+}
+
+
+.cards {
+    margin: 10px;
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.btn {
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+a {
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #141617;
+}
+
+/* Товар подробно */
+.cards-products {
+    margin: 10px auto;
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 35rem;
+}
+
+.product-image {
+    width: 400px;
+    height: 350px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+/* Корзина */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.increase-button, .decrease-button, .delete-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.increase-button {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.increase-button:hover {
+    background-color: #3e8e41;
+}
+
+.decrease-button {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.decrease-button:hover {
+    background-color: #e91e63;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+.clear-cart-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #f44336;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.clear-cart-button:hover {
+    background-color: #e91e63;
+}
+
+/* Анимация удаления элемента */
+.cart-item {
+    transition: opacity 0.5s ease;
+}
+
+.cart-item.remove {
+    opacity: 0;
 }
 
 
@@ -227,4 +332,52 @@ footer {
 		padding: 8px 10px; /* Уменьшите отступы для мобильных устройств */
 		font-size: 11px; /* Уменьшите размер шрифта для мобильных устройств */
 	}
+}
+
+/* Footer */
+footer {
+	width: 100%; /* Футер занимает всю ширину экрана */
+	background-color: #343a40; /* Цвет фона футера */
+	color: white; /* Цвет текста футера */
+	text-align: center; /* Выравнивание текста по центру */
+	padding: 1rem; /* Отступы вокруг текста */
+	margin-top: auto; /* Позволяет футеру оставаться внизу страницы */
+}
+
+.container-footer {
+    display: flex;
+    justify-content: space-between; /* Распределяем контейнеры по краям */
+    align-items: center;
+}
+
+.left-container, .right-container {
+    flex: 0 0 45%; /* Устанавливаем фиксированную ширину для контейнеров (45% от контейнера) */
+    text-align: center;
+    margin: 0; /* Убираем отступы */
+}
+
+.neon-text {
+	color: #fff;
+	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+		0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+}
+
+.contact-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.phone-icon {
+    margin-right: 0; /* Убираем отступ только для иконки телефона */
+}
+.contact-icon:hover {
+    transform: translateY(-5px);
+}
+.contact-link {
+    text-decoration: none; /* Убирает подчеркивание */
+}
+.contact-link:hover {
+    text-decoration: none;
 }

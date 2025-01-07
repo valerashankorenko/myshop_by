@@ -113,6 +113,10 @@ class ProductDetailView(BaseView, DetailView):
     model = Product
     template_name = 'shop/product_detail.html'
 
+    def get_object(self, queryset=None):
+        product_id = self.kwargs.get('product_id')
+        return get_object_or_404(Product, id=product_id)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         self.add_cart_quantity_to_context(context)

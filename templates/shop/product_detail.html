@@ -7,15 +7,21 @@
 
 {% block content %}
 <div class="container">
-    <h2>{{ product.name }}</h2>
-    <p><strong>Цена:</strong> {{ product.price }} руб.</p>
-    <p><strong>Описание:</strong> {{ product.description }}</p>
-    {% if product.image %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-    {% endif %}
-    <form action="{% url 'shop:add_to_cart' product.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Добавить в корзину</button>
-    </form>
+    <div class="cards-products">
+        <h2>{{ product.name }}</h2>
+        <p><strong>Цена:</strong> {{ product.price }} руб.</p>
+        <p><strong>Описание:</strong> {{ product.description }}</p>
+        
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid product-image" />
+        {% endif %}
+        
+        <div class="mt-4">
+            <form action="{% url 'shop:add_to_cart' product.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-dark">Добавить в корзину</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

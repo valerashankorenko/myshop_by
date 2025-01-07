@@ -7,28 +7,49 @@
 
 {% block content %}
 <div class="container">
-    <h1>Myshop_by</h1>
+    <h1>Добро пожаловать в <span>Myshop_by</span></h1>
+    <p class="intro-text">Выберите категорию товаров ниже</p>
+
     <div class="categories">
         {% for parent_category in category_list %}
-            <div class="category">
-                <h2>{{ parent_category.name }}</h2>
-                <hr class="category-divider">
-                <ul class="subcategory-list">
-                    {% for subcategory in parent_category.subcategories.all %}
-                        <li class="subcategory">
-                            <a href="{% url 'shop:product_list' category_id=subcategory.id %}">
-                                <i class="fas fa-box"></i> {{ subcategory.name }}
-                            </a>
-                        </li>
-                    {% empty %}
-                        <li>Нет подкатегорий</li>
-                    {% endfor %}
-                </ul>
-            </div>
+        <div class="category" onclick="toggleSubcategories(this)">
+            <h2>{{ parent_category.name }}</h2>
+            <ul class="subcategory-list">
+                {% for subcategory in parent_category.subcategories.all %}
+                <li class="subcategory">
+                    <a href="{% url 'shop:product_list' category_id=subcategory.id %}">
+                        {{ subcategory.name }}
+                    </a>
+                </li>
+                {% empty %}
+                <li class="empty-category">Нет подкатегорий</li>
+                {% endfor %}
+            </ul>
+        </div>
         {% empty %}
-            <p>Нет главных категорий</p>
+        <p class="no-categories">Нет главных категорий</p>
         {% endfor %}
     </div>
 </div>
-
+<script>
+    function toggleSubcategories(categoryElement) {
+        const subcategoryList = categoryElement.querySelector('.subcategory-list');
+        const allSubcategories = document.querySelectorAll('.subcategory-list');
+    
+        // Закрываем все открытые категории, кроме текущей
+        allSubcategories.forEach(list => {
+            if (list !== subcategoryList) {
+                list.style.maxHeight = null;
+            }
+        });
+    
+        // Проверяем, открыта ли уже текущая категория
+        if (subcategoryList.style.maxHeight) {
+            subcategoryList.style.maxHeight = null;
+        } else {
+            // Открываем текущую категорию
+            subcategoryList.style.maxHeight = subcategoryList.scrollHeight + "px";
+        }
+    }
+</script>     
 {% endblock %}

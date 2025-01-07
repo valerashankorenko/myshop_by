@@ -7,37 +7,41 @@
 
 {% block content %}
 <div class="container">
-    <h1>{{ category.name }}</h1>
+    <h1 class="display-4 mb-4">{{ category.name }}</h1>
 
     <!-- Форма поиска -->
-    <form method="get" class="mb-4">
-        <input type="text" name="search" value="{{ search_query }}" placeholder="Поиск по названию товара" />
-        <button type="submit">Поиск</button>
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        <input type="text" name="search" value="{{ search_query }}" placeholder="Поиск по названию товара" class="form-control w-50" />
+        <button type="submit" class="btn btn-dark ms-2">Поиск</button>
     </form>
 
-    <div class="product_list">
+    <div class="row product_list">
         {% for product in product_list %}
-        <div class="product">
-            <h2>{{ product.name }}</h2>
-            <p><strong>Цена:</strong> {{ product.price }} руб.</p>
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" />
-            {% endif %}
-            <form action="{% url 'shop:add_to_cart' product.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Добавить в корзину</button>
-            </form>
-            <a href="{% url 'shop:product_detail' product_id=product.id %}">Подробнее</a>
+        <div class="col-lg-4 col-md-6 mb-4 product">
+            <div class="cards">
+                <h2 class="card-title">{{ product.name }}</h2>
+                <p class="card-text mt-2"><strong>Цена:</strong> {{ product.price }} руб.</p>
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="cards-img-top" />
+                {% endif %}
+                <div class="card-body d-flex justify-content-center mt-2">
+                    <form action="{% url 'shop:add_to_cart' product.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark">Добавить в корзину</button>
+                    </form>
+                    <a href="{% url 'shop:product_detail' product_id=product.id %}" class="btn btn-secondary ms-2">Подробнее</a>
+                </div>
+            </div>
         </div>
         {% empty %}
-        <p>Нет товаров в этой категории.</p>
+        <p class="text-center">Нет товаров в этой категории.</p>
         {% endfor %}
     </div>
 
     <!-- Пагинация -->
     {% if is_paginated %}
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
+    <nav aria-label="Page navigation" class="d-flex justify-content-center">
+        <ul class="pagination">
             {% if page_obj.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}" aria-label="Предыдущая">

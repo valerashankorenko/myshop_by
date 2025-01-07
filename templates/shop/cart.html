@@ -6,30 +6,31 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Корзина: {{ user.get_full_name }}</h2>
-    {% if cart_items.count > 0 %}
-        <ul id="cart-items">
-            {% for cart_item in cart_items_with_total_price %}
-                <li id="item-{{ cart_item.item.pk }}" data-id="{{ cart_item.item.pk }}">
-                    {{ cart_item.item.product.name }} -
-                    <span class="item-quantity">{{ cart_item.item.quantity }}</span> шт. -
-                    <span class="item-price">{{ cart_item.total_price }}</span> р.
-                    <button class="increase-button">+</button>
-                    <button class="decrease-button">-</button>
-                    <button class="delete-button">Удалить</button>
-                </li>
-            {% endfor %}
-        </ul>
-        <p>Итого: <span id="total-quantity">{{ total_quantity }}</span> товаров</p>
-        <p>Общая сумма: <span id="total-price">{{ total_price }}</span> р.</p>
-        <form action="{% url 'shop:clear_cart' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Очистить корзину</button>
-        </form>
-    {% else %}
-        <p>Ваша корзина пуста.</p>
-    {% endif %}
+
+<div class="container"> 
+    <h2>Корзина: {{ user.get_full_name }}</h2> 
+    {% if cart_items.count > 0 %} 
+    <ul id="cart-items"> 
+        {% for cart_item in cart_items_with_total_price %} 
+        <li id="item-{{ cart_item.item.pk }}" data-id="{{ cart_item.item.pk }}" class="cart-item">
+            {{ cart_item.item.product.name }}
+            <span class="item-quantity">{{ cart_item.item.quantity }}</span> шт.
+            <span class="item-price">{{ cart_item.total_price }}</span> р.
+            <button class="increase-button">+</button> 
+            <button class="decrease-button">-</button> 
+            <button class="delete-button">Удалить</button>
+        </li> 
+        {% endfor %} 
+    </ul> 
+    <p>Итого: <span id="total-quantity">{{ total_quantity }}</span> товаров</p>
+    <p>Общая сумма корзины: <span id="total-price">{{ total_price }}</span> р.</p>
+    <form action="{% url 'shop:clear_cart' %}" method="post">
+        {% csrf_token %} 
+        <button type="submit" class="clear-cart-button">Очистить корзину</button>
+    </form> 
+    {% else %} 
+    <p>Ваша корзина пуста.</p>
+    {% endif %} 
 </div>
 <script>
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -68,8 +69,10 @@
             if (data.success) {
                 const itemElement = document.getElementById(`item-${itemId}`);
                 if (data.new_quantity === 0) { 
-                    // Удаляем элемент из DOM, если новое количество равно 0
-                    if (itemElement) itemElement.remove();
+                    // Удаляем элемент из DOM с анимацией
+                    itemElement.style.transition = 'opacity 0.5s ease';
+                    itemElement.style.opacity = '0';
+                    setTimeout(() => itemElement.remove(), 500); // Удаляем элемент после анимации
                 } else {
                     // Обновляем количество и цену товара
                     itemElement.querySelector('.item-quantity').textContent = data.new_quantity;
