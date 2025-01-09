@@ -48,8 +48,8 @@ h1 {
 }
 
 .navbar-nav .nav-link:hover {
-	color: white; /* Цвет при наведении */
-	animation: pulse 0.6s infinite; /* Анимация пульсации */
+	color: #3498db;
+	animation: pulse 0.6s infinite;
 }
 
 @keyframes pulse {
@@ -65,15 +65,18 @@ h1 {
 }
 
 .btn.btn-dark.dropdown-toggle.custom-dropdown-toggle {
+	width: 165px;
+	height: 40px;
 	border-radius: 15px !important;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Добавление тени */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 	padding: 7px 15px !important;
 	transition: background-color 0.3s, box-shadow 0.3s !important;
 	background-color: black;
+	color: #3498db;
 }
 
 .btn.btn-dark.dropdown-toggle.custom-dropdown-toggle:hover {
-	background-color: #495057 !important; /* Темнее оттенок серого */
+	background-color: #495057 !important;
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -82,32 +85,75 @@ h1 {
 }
 
 .custom-dropdown-menu .dropdown-item {
+	color: #3498db;
 	transition: background-color 0.3s;
 }
 
 .custom-dropdown-menu .dropdown-item:hover {
-	background-color: #495057; /* Еще темнее оттенок серого */
+	background-color: #495057;
 }
 
 .cart-icon {
 	position: relative;
+	
 }
+.cart-img {
+	width: 20px;
+	height: 20px;
+	margin-right: 4px;
+
+}
+
 
 .cart-count {
 	position: absolute;
-	top: -5px; /* Положение по вертикали */
-	right: -10px; /* Положение по горизонтали */
-	background-color: rgba(255, 255, 255, 0.3); /* Цвет фона для выделения */
-	color: black; /* Цвет текста */
-	border-radius: 50%; /* Круглая форма */
-	padding: 2px 5px; /* Отступы */
-	font-size: 12px; /* Размер шрифта */
+	top: -10px;
+	right: -7px;
+	background-color: rgba(255, 255, 255, 0.3);
+	color: black;
+	border-radius: 50%;
+	padding: 2px 5px;
+	font-size: 12px;
 }
 
 /* Главная страница */
+.logo-container, .logo-animated, .logo-interactive {
+    cursor: pointer;
+    text-align: center;
+}
+
+.logo-interactive {
+    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.hover-effect {
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 0 5px;
+}
+
+.hover-effect:hover {
+    transform: translateY(-5px);
+    color: #3498db;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.blink {
+    animation: blink 1.2s infinite;
+    color: #e74c3c;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .intro-text {
 	font-size: 1.2em;
-	margin-bottom: 40px;
+	margin-bottom: 10px;
+	padding: 5px;
 	text-align: center;
 }
 
@@ -118,6 +164,7 @@ h1 {
 }
 
 .category {
+	justify-content: center;
 	text-align: center;
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 15px;
@@ -153,7 +200,7 @@ h1 {
 }
 
 .subcategory a {
-	color: #fff;
+	color: #3498db;;
 	text-decoration: none;
 	font-size: 1em;
 }
@@ -261,11 +308,21 @@ a:hover {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.cart-sum {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 15px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	font-weight: bold;
+	padding: 18px;
+	margin: 10px;
+	line-height: 1.0;
+}
+
 .cart-item {
-	gap: 5px;
+	gap: 10px;
 	align-items: center;
 	padding: 10px;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid black;
 	transition: all 0.3s ease;
 }
 
@@ -306,7 +363,8 @@ a:hover {
 
 .increase-button {
 	background-color: #4caf50;
-	color: #fff;
+	color: black;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .increase-button:hover {
@@ -315,7 +373,8 @@ a:hover {
 
 .decrease-button {
 	background-color: #f44336;
-	color: #fff;
+	color: black;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .decrease-button:hover {
@@ -324,7 +383,8 @@ a:hover {
 
 .delete-button {
 	background-color: #e74c3c;
-	color: #fff;
+	color: black;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .delete-button:hover {
@@ -338,8 +398,9 @@ a:hover {
 	padding: 10px 20px;
 	font-size: 18px;
 	background-color: #f44336;
-	color: #fff;
+	color: black;
 	transition: background-color 0.3s ease;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .clear-cart-button:hover {
@@ -365,9 +426,9 @@ a:hover {
 
 .pagination .page-link {
 	color: black;
-	padding: 10px 15px; /* Измените отступы для кнопок */
-	font-size: 16px; /* Измените размер шрифта */
-	text-decoration: none; /* Уберите подчеркивание */
+	padding: 10px 15px;
+	font-size: 16px;
+	text-decoration: none;
 }
 
 .pagination .active .page-link {
@@ -381,24 +442,22 @@ a:hover {
 }
 
 .pagination .page-link:hover {
-	color: black; /* Цвет текста при наведении */
+	color: black;
 }
 
 @media (max-width: 768px) {
 	.pagination .page-link {
-		padding: 8px 10px; /* Уменьшите отступы для мобильных устройств */
-		font-size: 11px; /* Уменьшите размер шрифта для мобильных устройств */
+		padding: 8px 10px;
+		font-size: 11px;
 	}
 }
 
 /* Footer */
 footer {
-	width: 100%; /* Футер занимает всю ширину экрана */
-	background-color: #343a40; /* Цвет фона футера */
-	color: white; /* Цвет текста футера */
-	text-align: center; /* Выравнивание текста по центру */
-	padding: 1rem; /* Отступы вокруг текста */
-	margin-top: auto; /* Позволяет футеру оставаться внизу страницы */
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.2);
+	text-align: center;
+	margin-top: auto;
 }
 
 .container-footer {
@@ -414,10 +473,17 @@ footer {
 }
 
 .neon-text {
-	color: #fff;
-	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
-		0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+	color: black;
+	text-shadow: 0 0 7px #00e5ff,
+		0 0 10px #00e5ff, 
+		0 0 21px #00e5ff, 
+		0 0 42px #00bfff,
+		0 0 82px #00bfff, 
+		0 0 92px #00bfff, 
+		0 0 102px #00bfff, 
+		0 0 151px #00bfff;
 }
+
 
 .contact-icon {
 	width: 30px;
@@ -427,13 +493,13 @@ footer {
 }
 
 .phone-icon {
-	margin-right: 0; /* Убираем отступ только для иконки телефона */
+	margin-right: 0;
 }
 .contact-icon:hover {
 	transform: translateY(-5px);
 }
 .contact-link {
-	text-decoration: none; /* Убирает подчеркивание */
+	text-decoration: none;
 }
 .contact-link:hover {
 	text-decoration: none;

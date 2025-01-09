@@ -1,55 +1,54 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}
-Главная страница
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block title %} Главная страница
+{% endblock %} {% block content %}
 <div class="container">
-    <h1>Добро пожаловать в <span>Myshop_by</span></h1>
-    <p class="intro-text">Выберите категорию товаров ниже</p>
+	<div class="logo-interactive">
+		<span class="hover-effect">My</span>
+		<span class="hover-effect">shop</span>
+		<span class="blink">_</span>
+		<span class="hover-effect">by</span>
+	</div>
+	<p class="intro-text">&#8659;Выберите категорию товаров ниже&#8659;</p>
 
-    <div class="categories">
-        {% for parent_category in category_list %}
-        <div class="category" onclick="toggleSubcategories(this)">
-            <h2>{{ parent_category.name }}</h2>
-            <ul class="subcategory-list">
-                {% for subcategory in parent_category.subcategories.all %}
-                <li class="subcategory">
-                    <a href="{% url 'shop:product_list' category_id=subcategory.id %}">
-                        {{ subcategory.name }}
-                    </a>
-                </li>
-                {% empty %}
-                <li class="empty-category">Нет подкатегорий</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% empty %}
-        <p class="no-categories">Нет главных категорий</p>
-        {% endfor %}
-    </div>
+	<div class="categories">
+		{% for parent_category in category_list %}
+		<div class="category" onclick="toggleSubcategories(this)">
+			<h2>{{ parent_category.name }}</h2>
+			<ul class="subcategory-list">
+				{% for subcategory in parent_category.subcategories.all %}
+				<li class="subcategory">
+					<a href="{% url 'shop:product_list' category_id=subcategory.id %}">
+						{{ subcategory.name }}
+					</a>
+				</li>
+				{% empty %}
+				<li class="empty-category">Нет подкатегорий</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% empty %}
+		<p class="no-categories">Нет главных категорий</p>
+		{% endfor %}
+	</div>
 </div>
 <script>
-    function toggleSubcategories(categoryElement) {
-        const subcategoryList = categoryElement.querySelector('.subcategory-list');
-        const allSubcategories = document.querySelectorAll('.subcategory-list');
-    
-        // Закрываем все открытые категории, кроме текущей
-        allSubcategories.forEach(list => {
-            if (list !== subcategoryList) {
-                list.style.maxHeight = null;
-            }
-        });
-    
-        // Проверяем, открыта ли уже текущая категория
-        if (subcategoryList.style.maxHeight) {
-            subcategoryList.style.maxHeight = null;
-        } else {
-            // Открываем текущую категорию
-            subcategoryList.style.maxHeight = subcategoryList.scrollHeight + "px";
-        }
-    }
-</script>     
+	function toggleSubcategories(categoryElement) {
+		const subcategoryList = categoryElement.querySelector('.subcategory-list')
+		const allSubcategories = document.querySelectorAll('.subcategory-list')
+
+		// Закрываем все открытые категории, кроме текущей
+		allSubcategories.forEach(list => {
+			if (list !== subcategoryList) {
+				list.style.maxHeight = null
+			}
+		})
+
+		// Проверяем, открыта ли уже текущая категория
+		if (subcategoryList.style.maxHeight) {
+			subcategoryList.style.maxHeight = null
+		} else {
+			// Открываем текущую категорию
+			subcategoryList.style.maxHeight = subcategoryList.scrollHeight + 'px'
+		}
+	}
+</script>
 {% endblock %}
