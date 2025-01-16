@@ -58,6 +58,8 @@ class BaseView:
         """
         context['total_quantity'] = self.get_cart_quantity()
         context['total_price'] = self.get_cart_total_price()
+        context['category_list'] = ParentCategory.objects.prefetch_related(
+            'subcategories').all()
 
 
 class CategoryListView(BaseView, ListView):

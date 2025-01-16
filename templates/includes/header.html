@@ -9,13 +9,34 @@
       <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <li class="nav-item">
-          {% if user.is_staff %}
-            <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
-          {% endif %}
+            {% if user.is_staff %}
+              <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
+            {% endif %}
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'shop:index' %}">Главная</a>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Категории
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+              {% for parent_category in category_list %}
+              <li class="nav-item dropdown">
+                <a class="dropdown-item" href="#">{{ parent_category.name }}</a>
+                <ul class="subcategory-list-header" data-category="{{ parent_category.id }}">
+                  {% for subcategory in parent_category.subcategories.all %}
+                  <li class="subcategory-header">
+                    <a href="{% url 'shop:product_list' category_id=subcategory.id %}">
+                      {{ subcategory.name }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>          
           <li class="nav-item">
             <a class="nav-link" href="{% url 'shop:view_cart' %}">
               <span class="cart-icon">
@@ -59,8 +80,22 @@
           </ul>
         </div>
       {% endif %}
-
-      
     </div>
   </nav>
 </header>
+<script>
+  document.querySelectorAll('.nav-item.dropdown').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      const subcategories = this.querySelector('.subcategory-list-header');
+      if (subcategories) {
+        subcategories.style.display = 'block'; // Показываем подкатегории
+      }
+    });
+    item.addEventListener('mouseleave', function() {
+      const subcategories = this.querySelector('.subcategory-list-header');
+      if (subcategories) {
+        subcategories.style.display = 'none'; // Скрываем подкатегории
+      }
+    });
+  });  
+</script>

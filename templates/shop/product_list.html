@@ -29,7 +29,7 @@
                         {% csrf_token %}
                         <button type="submit" class="btn btn-dark">Добавить в корзину</button>
                     </form>
-                    <a href="{% url 'shop:product_detail' product_id=product.id %}" class="btn btn-secondary ms-2">Подробнее</a>
+                    <a href="{% url 'shop:product_detail' product_id=product.id %}" class="btn btn-dark ms-2">Подробнее</a>
                 </div>
             </div>
         </div>

@@ -48,20 +48,44 @@ h1 {
 }
 
 .navbar-nav .nav-link:hover {
-	color: #3498db;
+	color: blue;
 	animation: pulse 0.6s infinite;
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.subcategory-list-header {
+	display: none;
+	position: absolute;
+	left: 100%;
+	top: 0;
+	background: white;
+	border-radius: 5px !important;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+	width: 200px;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	line-height: 1.7;
+}
+.subcategory-list-header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.subcategory-list-header a:hover {
+    background: rgb(4, 4, 4, 0.5);
 }
 
 .btn.btn-dark.dropdown-toggle.custom-dropdown-toggle {
@@ -95,15 +119,12 @@ h1 {
 
 .cart-icon {
 	position: relative;
-	
 }
 .cart-img {
 	width: 20px;
 	height: 20px;
 	margin-right: 4px;
-
 }
-
 
 .cart-count {
 	position: absolute;
@@ -117,37 +138,45 @@ h1 {
 }
 
 /* Главная страница */
-.logo-container, .logo-animated, .logo-interactive {
-    cursor: pointer;
-    text-align: center;
+.logo-container,
+.logo-animated,
+.logo-interactive {
+	cursor: pointer;
+	text-align: center;
 }
 
 .logo-interactive {
-    font-size: 3rem;
-    font-family: 'Montserrat', sans-serif;
+	font-size: 3rem;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .hover-effect {
-    transition: all 0.3s ease;
-    display: inline-block;
-    padding: 0 5px;
+	transition: all 0.3s ease;
+	display: inline-block;
+	padding: 0 5px;
 }
 
 .hover-effect:hover {
-    transform: translateY(-5px);
-    color: #3498db;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+	transform: translateY(-5px);
+	color: #3498db;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .blink {
-    animation: blink 1.2s infinite;
-    color: #e74c3c;
+	animation: blink 1.2s infinite;
+	color: #e74c3c;
 }
 
 @keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .intro-text {
@@ -200,7 +229,7 @@ h1 {
 }
 
 .subcategory a {
-	color: #3498db;;
+	color: black;
 	text-decoration: none;
 	font-size: 1em;
 }
@@ -265,10 +294,14 @@ h1 {
 
 .btn {
 	transition: transform 0.2s ease-in-out;
+	color: #3498db;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
 }
 
 .btn:hover {
 	transform: scale(1.1);
+	color: #3498db;
 }
 
 a {
@@ -315,7 +348,7 @@ a:hover {
 	font-weight: bold;
 	padding: 18px;
 	margin: 10px;
-	line-height: 1.0;
+	line-height: 1;
 }
 
 .cart-item {
@@ -474,16 +507,10 @@ footer {
 
 .neon-text {
 	color: black;
-	text-shadow: 0 0 7px #00e5ff,
-		0 0 10px #00e5ff, 
-		0 0 21px #00e5ff, 
-		0 0 42px #00bfff,
-		0 0 82px #00bfff, 
-		0 0 92px #00bfff, 
-		0 0 102px #00bfff, 
+	text-shadow: 0 0 7px #00e5ff, 0 0 10px #00e5ff, 0 0 21px #00e5ff,
+		0 0 42px #00bfff, 0 0 82px #00bfff, 0 0 92px #00bfff, 0 0 102px #00bfff,
 		0 0 151px #00bfff;
 }
-
 
 .contact-icon {
 	width: 30px;
